@@ -52,6 +52,7 @@ public class Activity_DragList_Shop_Keeper extends AppCompatActivity {
         });
 
 
+
     }
 
     private void addDrag(String dragName) {
