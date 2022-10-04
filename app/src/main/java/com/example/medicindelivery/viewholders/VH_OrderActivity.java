@@ -20,7 +20,7 @@ public class VH_OrderActivity extends RecyclerView.ViewHolder {
     public VH_OrderActivity(@NonNull View itemView) {
         super(itemView);
         TextView_ViewHolder_DragName = itemView.findViewById(R.id.DragNameOrder);
-        DropDown=itemView.findViewById(R.id.DropDown);
+        DropDown=itemView.findViewById(R.id.AmountRecyler);
         delete=itemView.findViewById(R.id.deleteItemOrder);
 
     }

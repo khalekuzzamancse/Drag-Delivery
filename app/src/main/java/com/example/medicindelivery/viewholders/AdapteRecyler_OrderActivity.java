@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicindelivery.Order_Activity;
 import com.example.medicindelivery.R;
+import com.example.medicindelivery.datatypes.DataType_OrderList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapteRecyler_OrderActivity extends RecyclerView.Adapter<VH_OrderActivity> {
     Context context;
-    List<String> list;
+    List<DataType_OrderList> list;
 
-    public AdapteRecyler_OrderActivity(Context context, List<String> list) {
+    public AdapteRecyler_OrderActivity(Context context, List<DataType_OrderList> list) {
         this.context = context;
         this.list = list;
     }
@@ -47,14 +48,14 @@ public class AdapteRecyler_OrderActivity extends RecyclerView.Adapter<VH_OrderAc
 
     @Override
     public void onBindViewHolder(@NonNull VH_OrderActivity holder, int position) {
-        String stationName = list.get(position);
+        String stationName = list.get(position).itemName;
         holder.TextView_ViewHolder_DragName.setText(stationName);
+        holder.DropDown.setText(list.get(position).itemAmount);
 
     }
 
     @Override
     public int getItemCount() {
-
         return list.size();
     }
 }
