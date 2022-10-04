@@ -29,6 +29,7 @@ public class Order_Activity extends AppCompatActivity {
     List<DataType_OrderList> orderList;
     AutoCompleteTextView tv;
     AutoCompleteTextView amount;
+    AdapteRecyler_OrderActivity adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,7 @@ public class Order_Activity extends AppCompatActivity {
             @Override
             public void onChanged(HashMap<String, List<String>> stringListHashMap) {
                 DragList = stringListHashMap.get("khalekuzzaman91@gmail.com");
-                if(DragList!=null)
-                {
+                if (DragList != null) {
                     ArrayAdapter adapter = new ArrayAdapter(Order_Activity.this, R.layout.layout_suggestion, DragList);
                     tv.setAdapter(adapter);
                 }
@@ -52,38 +52,55 @@ public class Order_Activity extends AppCompatActivity {
 
             }
         });
-        List<Integer> Count=new ArrayList<>();
-       for(int i=1;i<=100;i++)
-           Count.add(i);
+        List<Integer> Count = new ArrayList<>();
+        for (int i = 1; i <= 100; i++)
+            Count.add(i);
 //
-        ArrayAdapter<Integer> adapter3=new ArrayAdapter<>(this,R.layout.layout_suggestion,Count);
-        AutoCompleteTextView v=findViewById(R.id.autoCompleteTextView2);
+        ArrayAdapter<Integer> adapter3 = new ArrayAdapter<>(this, R.layout.layout_suggestion, Count);
+        AutoCompleteTextView v = findViewById(R.id.autoCompleteTextView2);
         v.setAdapter(adapter3);
 
-        AdapteRecyler_OrderActivity adapter2 = new AdapteRecyler_OrderActivity(Order_Activity.this, orderList);
+        adapter2 = new AdapteRecyler_OrderActivity(Order_Activity.this, orderList);
         RecyclerView r = findViewById(R.id.recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         r.setLayoutManager(linearLayoutManager);
         r.setAdapter(adapter2);
-        Button save=findViewById(R.id.save);
-        amount=findViewById(R.id.autoCompleteTextView2);
-      save.setOnClickListener(view1 -> {
+        Button save = findViewById(R.id.save);
+        amount = findViewById(R.id.autoCompleteTextView2);
+        save.setOnClickListener(view1 -> {
             String itemSelected = tv.getText().toString().trim();
-          DataType_OrderList l=new DataType_OrderList();
-          l.itemName=itemSelected;
-          l.itemAmount=amount.getText().toString();
+            DataType_OrderList l = new DataType_OrderList();
+            l.itemName = itemSelected;
             if (itemSelected.isEmpty()) {
                 tv.setError("Can not be empty!");
 
                 return;
             }
+            l.itemAmount = RemoveDuplicate(itemSelected, amount.getText().toString());
             orderList.add(l);
             adapter2.notifyDataSetChanged();
 
         });
 
+
+    }
+
+    private String RemoveDuplicate(String itemSelected, String amount) {
+        String totalAmount = amount;
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).itemName.equals(itemSelected)) {
+                Log.i("FoundAt", String.valueOf(i));
+                int prevAmount = Integer.parseInt(orderList.get(i).itemAmount);
+                int CurrentAmount = Integer.parseInt(amount);
+                orderList.remove(i);
+                adapter2.notifyItemRemoved(i);
+                totalAmount = String.valueOf(prevAmount + CurrentAmount);
+            }
+
+        }
+        return totalAmount;
 
     }
 
