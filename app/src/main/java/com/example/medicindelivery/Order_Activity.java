@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -92,34 +94,56 @@ public class Order_Activity extends AppCompatActivity {
 
                 return;
             }
-            String totalAmount=RemoveDuplicate(itemSelected, amount.getText().toString());
-            l.itemAmount =totalAmount;
+        RemoveDuplicate(itemSelected, amount.getText().toString());
+            l.itemAmount =amount.getText().toString();
             l.itemPrice=PriceTable.get(itemSelected);
-            Log.i("PriceTable", totalPrice(itemSelected,totalAmount));
+
             orderList.add(l);
             adapter2.notifyDataSetChanged();
 
+        });
+        amount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String s = parent.getItemAtPosition(position).toString();
+                Log.i("PriceTable", s);
+
+                String itemSelected = chooseItem.getText().toString().trim();
+                DataType_OrderList l = new DataType_OrderList();
+                l.itemNameWithPrice = itemSelected;
+                if (itemSelected.isEmpty()) {
+                    chooseItem.setError("Can not be empty!");
+
+                    return;
+                }
+                String totalAmount=s;
+                RemoveDuplicate(itemSelected, s);
+                l.itemAmount =totalAmount;
+                l.itemPrice=PriceTable.get(itemSelected);
+
+                orderList.add(l);
+                adapter2.notifyDataSetChanged();
+
+
+            }
         });
 
 
     }
 
-    private String RemoveDuplicate(String itemSelected, String amount) {
-        String totalAmount = amount;
+    private void RemoveDuplicate(String itemSelected, String amount) {
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).itemNameWithPrice.equals(itemSelected)) {
-                Log.i("FoundAt", String.valueOf(i));
-                int prevAmount = Integer.parseInt(orderList.get(i).itemAmount);
-                int CurrentAmount = Integer.parseInt(amount);
                 orderList.remove(i);
                 adapter2.notifyItemRemoved(i);
-                totalAmount = String.valueOf(prevAmount + CurrentAmount);
+
             }
 
         }
-        return totalAmount;
+
 
     }
+
     private String totalPrice(String item,String amount)
     {
         int total= Integer.parseInt(PriceTable.get(item))*Integer.parseInt(amount);
