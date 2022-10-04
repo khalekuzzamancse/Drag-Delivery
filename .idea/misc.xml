@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Khalekuzzaman/AndroidStudioProjects/MedicinDelivery/app/src/main/res/drawable-v24/icon_age.xml" value="0.1855" />
+        <entry key="..\:/Users/Khalekuzzaman/AndroidStudioProjects/MedicinDelivery/app/src/main/res/layout/activity_login_scrollable.xml" value="0.19907407407407407" />
         <entry key="..\:/Users/Khalekuzzaman/AndroidStudioProjects/MedicinDelivery/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Khalekuzzaman/AndroidStudioProjects/MedicinDelivery/app/src/main/res/layout/activity_register.xml" value="0.25" />
       </map>
     </option>
   </component>
@@ -12,5 +15,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.19907407407407407" />
+      </ProjectState>
+    </option>
   </component>
 </project>

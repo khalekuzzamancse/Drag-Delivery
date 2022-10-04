@@ -4,29 +4,110 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+
+import com.example.medicindelivery.datatypes.Datatype_ShopList;
+import com.example.medicindelivery.viewmodels.ViewModel_AllDistrictList;
+import com.example.medicindelivery.viewmodels.ViewModel_ShopList;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ViewModelTest model;
-
+    FirebaseFirestore db;
+    ViewModel_ShopList model;
+    ViewModel_AllDistrictList modelDistrict;
+    List<String> districtList;
+    List<String> subDistrictList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    model=new ViewModelProvider(this).get(ViewModelTest.class);
 
-       model.getCurrentName().observe(this, new Observer<String>() {
-           @Override
-           public void onChanged(String s) {
-               Log.i("Curr,Lamad",s);
-           }
-       });
+        startActivity(new Intent(this,Activity_DragList_Shop_Keeper.class));
+        model = new ViewModelProvider(this).get(ViewModel_ShopList.class);
+        model.getShopListHashMap().observe(MainActivity.this, new Observer<HashMap<String, List<String>>>() {
+            @Override
+            public void onChanged(HashMap<String, List<String>> stringListHashMap) {
+               // Log.i("DataTaken", String.valueOf(stringListHashMap));
 
-        Log.i("Curr",model.getCurrentName().getValue());
+            }
+        });
+        model.getShopListInfo().observe(MainActivity.this, new Observer<HashMap<String, Datatype_ShopList>>() {
+            @Override
+            public void onChanged(HashMap<String, Datatype_ShopList> info) {
+                for(String key: info.keySet())
+                {
+                    if(key!=""||key!=null)
+                        Log.i("DataTakenMain", String.valueOf(info.get("khalekuzzaman91@gmail.com").DragList));
+                }
 
-        model.setCurrentName("Alhamdulliah");
+            }
+        });
+
+
+        modelDistrict = new ViewModelProvider(this).get(ViewModel_AllDistrictList.class);
+        modelDistrict.getDistrictListHashMap().observe(MainActivity.this, new Observer<HashMap<String, List<String>>>() {
+            @Override
+            public void onChanged(HashMap<String, List<String>> Dis) {
+             //   Log.i("DataTaken", String.valueOf(Dis));
+            }
+        });
+
+
 
     }
+
+    private void setLocation() {
+        districtList = new ArrayList<>();
+        districtList = modelDistrict.getDistrictList().getValue();
+
+//        ArrayAdapter<String> adapter=new ArrayAdapter<>(Activity_SearchBlood.this,R.layout.layout_drop_down_menu_single_item,districtList);
+//        AutoCompleteTextView d=
+//                findViewById(R.id.Activity_SearchBlood_TextInputLayout_AutoCompleteTextView_District);
+//        d.setAdapter(adapter);
+//
+//        d.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String s=  parent.getItemAtPosition(position).toString();
+//                Log.i("Clickeed",s);
+//                setSubDistrict(s);
+//            }
+//        });
+
+    }
+
+    private void setSubDistrict(String s) {
+        subDistrictList = new ArrayList<>();
+        subDistrictList = modelDistrict.getDistrictListHashMap().getValue().get(s);
+        Log.i("SubDistrict", String.valueOf(subDistrictList));
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(Activity_SearchBlood.this, R.layout.layout_drop_down_menu_single_item, subDistrictList);
+//        AutoCompleteTextView d =
+//                findViewById(R.id.Activity_SearchBlood_TextInputLayout_AutoCompleteTextView_SubDistrict);
+//        d.setAdapter(adapter);
+//
+//        d.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String s = parent.getItemAtPosition(position).toString();
+//                Log.i("Clickeed", s);
+//
+//            }
+//        });
+
+    }
+
 }

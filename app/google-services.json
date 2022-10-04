@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "949348388854",
+    "project_id": "drag-delivery-56457",
+    "storage_bucket": "drag-delivery-56457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949348388854:android:18c65c6a838330e9b0c1d7",
+        "android_client_info": {
+          "package_name": "com.example.medicindelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949348388854-dii72tec0vtr9pgjupalg83ic2i1dsnf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsf-tztTiz4QQroZG1uRIcKdJ_Gc4UJs0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949348388854-dii72tec0vtr9pgjupalg83ic2i1dsnf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
