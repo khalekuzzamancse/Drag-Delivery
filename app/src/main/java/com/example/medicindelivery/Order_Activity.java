@@ -53,10 +53,13 @@ public class Order_Activity extends AppCompatActivity {
                 if (DragListWithPrice != null) {
                     for (int i = 0; i < DragListWithPrice.size(); i++) {
                         String itemWithPrice = DragListWithPrice.get(i);
-                        String itemWithoutPrice = itemWithPrice.substring(0, itemWithPrice.indexOf('$'));
-                        String price = itemWithPrice.substring(itemWithPrice.indexOf('$') + 1);
-                        PriceTable.put(itemWithoutPrice, price);
-                        DragListWithoutPrice.add(itemWithoutPrice);
+
+                            String itemWithoutPrice = itemWithPrice.substring(0, itemWithPrice.indexOf('$'));
+                            String price = itemWithPrice.substring(itemWithPrice.indexOf('$') + 1);
+                            PriceTable.put(itemWithoutPrice, price);
+                            DragListWithoutPrice.add(itemWithoutPrice);
+
+
                     }
 
                     Collections.sort(DragListWithoutPrice);

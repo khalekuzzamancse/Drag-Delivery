@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.example.medicindelivery.datatypes.Datatype_ShopList;
 import com.example.medicindelivery.viewmodels.ViewModel_AllDistrictList;
@@ -34,11 +35,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        startActivity(new Intent(this, Order_Activity.class));
-        // startActivity(new Intent(this, Activity_DragList_Shop_Keeper.class));
-
-
+        //
+        Button sh = findViewById(R.id.button);
+        sh.setOnClickListener(view -> {
+            startActivity(new Intent(this, Activity_DragList_Shop_Keeper.class));
+        });
+        Button cus = findViewById(R.id.button2);
+        cus.setOnClickListener(view -> {
+            startActivity(new Intent(this, Order_Activity.class));
+        });
         //
         model = new ViewModelProvider(this).get(ViewModel_ShopList.class);
         model.getShopListHashMap().observe(MainActivity.this, new Observer<HashMap<String, List<String>>>() {
@@ -82,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         subDistrictList = new ArrayList<>();
         subDistrictList = modelDistrict.getDistrictListHashMap().getValue().get(s);
         Log.i("SubDistrict", String.valueOf(subDistrictList));
-
 
 
     }
