@@ -65,7 +65,6 @@ public class Activity_DragList_Shop_Keeper extends AppCompatActivity {
         });
 
 
-
         save = findViewById(R.id.save);
         save.setOnClickListener(view -> {
             String dragName = v.getText().toString().trim();
@@ -76,18 +75,6 @@ public class Activity_DragList_Shop_Keeper extends AppCompatActivity {
             String dragName = v.getText().toString().trim();
             removeDrag(dragName);
         });
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("SugesstionList").get()
-//                .addOnCompleteListener(this, (Task<QuerySnapshot> task) -> {
-//                    if (!task.isSuccessful()) {
-//                        Log.w("MainActivity", "QueryFailed", task.getException());
-//                    } else {
-//                        QuerySnapshot q = task.getResult();
-//                        for (QueryDocumentSnapshot d : q) {
-//                            Log.i("dataGT:", String.valueOf(d.getData()));
-//                        }
-//                    }
-//                });
 
 
     }
@@ -104,10 +91,6 @@ public class Activity_DragList_Shop_Keeper extends AppCompatActivity {
     }
 
     private void removeDrag(String dragName) {
-//        FirebaseAuth mAuth;
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        String email = user.getEmail();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference doc = db.collection("ShopList")
                 .document("khalekuzzaman91@gmail.com");
