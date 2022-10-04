@@ -48,9 +48,13 @@ public class AdapteRecyler_OrderActivity extends RecyclerView.Adapter<VH_OrderAc
 
     @Override
     public void onBindViewHolder(@NonNull VH_OrderActivity holder, int position) {
-        String stationName = list.get(position).itemName;
+        String stationName = list.get(position).itemNameWithPrice;
         holder.TextView_ViewHolder_DragName.setText(stationName);
-        holder.DropDown.setText(list.get(position).itemAmount);
+        String totalItems=list.get(position).itemAmount;
+        String totalPrice= String.valueOf(
+                Integer.parseInt(totalItems)*Integer.parseInt(list.get(position).itemPrice));
+
+        holder.DropDown.setText("Items="+totalItems+", Price: "+totalPrice);
 
     }
 

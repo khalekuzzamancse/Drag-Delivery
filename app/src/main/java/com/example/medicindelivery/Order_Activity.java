@@ -86,7 +86,7 @@ public class Order_Activity extends AppCompatActivity {
         save.setOnClickListener(view1 -> {
             String itemSelected = chooseItem.getText().toString().trim();
             DataType_OrderList l = new DataType_OrderList();
-            l.itemName = itemSelected;
+            l.itemNameWithPrice = itemSelected;
             if (itemSelected.isEmpty()) {
                 chooseItem.setError("Can not be empty!");
 
@@ -94,6 +94,7 @@ public class Order_Activity extends AppCompatActivity {
             }
             String totalAmount=RemoveDuplicate(itemSelected, amount.getText().toString());
             l.itemAmount =totalAmount;
+            l.itemPrice=PriceTable.get(itemSelected);
             Log.i("PriceTable", totalPrice(itemSelected,totalAmount));
             orderList.add(l);
             adapter2.notifyDataSetChanged();
@@ -106,7 +107,7 @@ public class Order_Activity extends AppCompatActivity {
     private String RemoveDuplicate(String itemSelected, String amount) {
         String totalAmount = amount;
         for (int i = 0; i < orderList.size(); i++) {
-            if (orderList.get(i).itemName.equals(itemSelected)) {
+            if (orderList.get(i).itemNameWithPrice.equals(itemSelected)) {
                 Log.i("FoundAt", String.valueOf(i));
                 int prevAmount = Integer.parseInt(orderList.get(i).itemAmount);
                 int CurrentAmount = Integer.parseInt(amount);
