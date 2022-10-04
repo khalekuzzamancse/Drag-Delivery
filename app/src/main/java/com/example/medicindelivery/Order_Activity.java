@@ -27,7 +27,7 @@ import java.util.List;
 public class Order_Activity extends AppCompatActivity {
     List<String> DragListWithPrice;
     List<String> DragListWithoutPrice;
-    HashMap<String,String>PriceTable;
+    HashMap<String, String> PriceTable;
     ViewModel_ShopList model;
     List<DataType_OrderList> orderList;
     AutoCompleteTextView chooseItem;
@@ -42,21 +42,20 @@ public class Order_Activity extends AppCompatActivity {
 
         chooseItem = findViewById(R.id.AutoCompleteTextViewSelect);
         DragListWithPrice = new ArrayList<>();
-        DragListWithoutPrice=new ArrayList<>();
+        DragListWithoutPrice = new ArrayList<>();
         orderList = new ArrayList<>();
-        PriceTable=new HashMap<>();
+        PriceTable = new HashMap<>();
         model = new ViewModelProvider(this).get(ViewModel_ShopList.class);
         model.getShopListHashMap().observe(Order_Activity.this, new Observer<HashMap<String, List<String>>>() {
             @Override
             public void onChanged(HashMap<String, List<String>> stringListHashMap) {
                 DragListWithPrice = stringListHashMap.get("khalekuzzaman91@gmail.com");
                 if (DragListWithPrice != null) {
-                    for(int i=0;i<DragListWithPrice.size();i++)
-                    {
-                        String itemWithPrice=DragListWithPrice.get(i);
-                        String itemWithoutPrice=itemWithPrice.substring(0,itemWithPrice.indexOf('$'));
-                        String price=itemWithPrice.substring(itemWithPrice.indexOf('$')+1);
-                        PriceTable.put(itemWithoutPrice,price);
+                    for (int i = 0; i < DragListWithPrice.size(); i++) {
+                        String itemWithPrice = DragListWithPrice.get(i);
+                        String itemWithoutPrice = itemWithPrice.substring(0, itemWithPrice.indexOf('$'));
+                        String price = itemWithPrice.substring(itemWithPrice.indexOf('$') + 1);
+                        PriceTable.put(itemWithoutPrice, price);
                         DragListWithoutPrice.add(itemWithoutPrice);
                     }
 
@@ -94,9 +93,9 @@ public class Order_Activity extends AppCompatActivity {
 
                 return;
             }
-        RemoveDuplicate(itemSelected, amount.getText().toString());
-            l.itemAmount =amount.getText().toString();
-            l.itemPrice=PriceTable.get(itemSelected);
+            RemoveDuplicate(itemSelected, amount.getText().toString());
+            l.itemAmount = amount.getText().toString();
+            l.itemPrice = PriceTable.get(itemSelected);
 
             orderList.add(l);
             adapter2.notifyDataSetChanged();
@@ -105,24 +104,27 @@ public class Order_Activity extends AppCompatActivity {
         amount.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = parent.getItemAtPosition(position).toString();
-                Log.i("PriceTable", s);
-
                 String itemSelected = chooseItem.getText().toString().trim();
-                DataType_OrderList l = new DataType_OrderList();
-                l.itemNameWithPrice = itemSelected;
-                if (itemSelected.isEmpty()) {
-                    chooseItem.setError("Can not be empty!");
+                if (isAdded(itemSelected) == true) {
+                    String s = parent.getItemAtPosition(position).toString();
+                    Log.i("PriceTable", s);
 
-                    return;
+
+                    DataType_OrderList l = new DataType_OrderList();
+                    l.itemNameWithPrice = itemSelected;
+                    if (itemSelected.isEmpty()) {
+                        chooseItem.setError("Can not be empty!");
+
+                        return;
+                    }
+                    String totalAmount = s;
+                    RemoveDuplicate(itemSelected, s);
+                    l.itemAmount = totalAmount;
+                    l.itemPrice = PriceTable.get(itemSelected);
+
+                    orderList.add(l);
+                    adapter2.notifyDataSetChanged();
                 }
-                String totalAmount=s;
-                RemoveDuplicate(itemSelected, s);
-                l.itemAmount =totalAmount;
-                l.itemPrice=PriceTable.get(itemSelected);
-
-                orderList.add(l);
-                adapter2.notifyDataSetChanged();
 
 
             }
@@ -144,11 +146,21 @@ public class Order_Activity extends AppCompatActivity {
 
     }
 
-    private String totalPrice(String item,String amount)
-    {
-        int total= Integer.parseInt(PriceTable.get(item))*Integer.parseInt(amount);
+
+    private String totalPrice(String item, String amount) {
+        int total = Integer.parseInt(PriceTable.get(item)) * Integer.parseInt(amount);
         return String.valueOf(total);
     }
 
+    private boolean isAdded(String itemSelected) {
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).itemNameWithPrice.equals(itemSelected)) {
+                return true;
+            }
 
+        }
+        return false;
+
+
+    }
 }
