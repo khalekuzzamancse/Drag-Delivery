@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,26 +32,29 @@ public class AdapteRecyler_OrderActivity extends RecyclerView.Adapter<VH_OrderAc
         View viewOfRecyclerLayout = LayoutInflater.from(context).
                 inflate(R.layout.layout_recycler_order_activity, parent, false);
         VH_OrderActivity viewHolder = new VH_OrderActivity(viewOfRecyclerLayout);
+        viewHolder.delete.setOnClickListener(view -> {
+            int pos=viewHolder.getAdapterPosition();
+            list.remove(pos);
+            notifyItemRemoved(pos);
+
+        });
+
+
+
         return viewHolder;
 
     }
 
     @Override
     public void onBindViewHolder(@NonNull VH_OrderActivity holder, int position) {
-        String stationName=list.get(position);
+        String stationName = list.get(position);
         holder.TextView_ViewHolder_DragName.setText(stationName);
-        List<String> itemCount=new ArrayList<>();
-        itemCount.add("1");
-        itemCount.add("2");
-//
-        ArrayAdapter<String> adapter=new ArrayAdapter(context,R.layout.layout_suggestion,itemCount);
-        AutoCompleteTextView v=holder.DropDown;
-        v.setAdapter(adapter);
 
     }
 
     @Override
     public int getItemCount() {
+
         return list.size();
     }
 }

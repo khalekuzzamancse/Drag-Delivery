@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import com.example.medicindelivery.databinding.ActivityOrderBinding;
 import com.example.medicindelivery.viewholders.AdapteRecyler_OrderActivity;
@@ -59,6 +60,11 @@ public class Order_Activity extends AppCompatActivity {
         r.setAdapter(adapter2);
         orderActivity.save.setOnClickListener(view1 -> {
             String itemSelected = orderActivity.autoCompleteTextView.getText().toString().trim();
+            if(itemSelected.isEmpty())
+            {
+                orderActivity.autoCompleteTextView.setError("Can not be empty!");
+                return;
+            }
             orderList.add(itemSelected);
             adapter2.notifyDataSetChanged();
 
