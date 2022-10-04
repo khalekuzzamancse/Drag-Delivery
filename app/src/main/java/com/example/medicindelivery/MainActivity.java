@@ -35,21 +35,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(this,Activity_DragList_Shop_Keeper.class));
+        startActivity(new Intent(this, Order_Activity.class));
+        // startActivity(new Intent(this, Activity_DragList_Shop_Keeper.class));
+
+
+        //
         model = new ViewModelProvider(this).get(ViewModel_ShopList.class);
         model.getShopListHashMap().observe(MainActivity.this, new Observer<HashMap<String, List<String>>>() {
             @Override
             public void onChanged(HashMap<String, List<String>> stringListHashMap) {
-               // Log.i("DataTaken", String.valueOf(stringListHashMap));
+                // Log.i("DataTaken", String.valueOf(stringListHashMap));
 
             }
         });
         model.getShopListInfo().observe(MainActivity.this, new Observer<HashMap<String, Datatype_ShopList>>() {
             @Override
             public void onChanged(HashMap<String, Datatype_ShopList> info) {
-                for(String key: info.keySet())
-                {
-                    if(key!=""||key!=null)
+                for (String key : info.keySet()) {
+                    if (key != "" || key != null)
                         Log.i("DataTakenMain", String.valueOf(info.get("khalekuzzaman91@gmail.com").DragList));
                 }
 
@@ -61,10 +64,9 @@ public class MainActivity extends AppCompatActivity {
         modelDistrict.getDistrictListHashMap().observe(MainActivity.this, new Observer<HashMap<String, List<String>>>() {
             @Override
             public void onChanged(HashMap<String, List<String>> Dis) {
-             //   Log.i("DataTaken", String.valueOf(Dis));
+                //   Log.i("DataTaken", String.valueOf(Dis));
             }
         });
-
 
 
     }
@@ -73,19 +75,6 @@ public class MainActivity extends AppCompatActivity {
         districtList = new ArrayList<>();
         districtList = modelDistrict.getDistrictList().getValue();
 
-//        ArrayAdapter<String> adapter=new ArrayAdapter<>(Activity_SearchBlood.this,R.layout.layout_drop_down_menu_single_item,districtList);
-//        AutoCompleteTextView d=
-//                findViewById(R.id.Activity_SearchBlood_TextInputLayout_AutoCompleteTextView_District);
-//        d.setAdapter(adapter);
-//
-//        d.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String s=  parent.getItemAtPosition(position).toString();
-//                Log.i("Clickeed",s);
-//                setSubDistrict(s);
-//            }
-//        });
 
     }
 
@@ -94,19 +83,7 @@ public class MainActivity extends AppCompatActivity {
         subDistrictList = modelDistrict.getDistrictListHashMap().getValue().get(s);
         Log.i("SubDistrict", String.valueOf(subDistrictList));
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(Activity_SearchBlood.this, R.layout.layout_drop_down_menu_single_item, subDistrictList);
-//        AutoCompleteTextView d =
-//                findViewById(R.id.Activity_SearchBlood_TextInputLayout_AutoCompleteTextView_SubDistrict);
-//        d.setAdapter(adapter);
-//
-//        d.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String s = parent.getItemAtPosition(position).toString();
-//                Log.i("Clickeed", s);
-//
-//            }
-//        });
+
 
     }
 
