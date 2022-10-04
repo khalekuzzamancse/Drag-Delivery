@@ -51,11 +51,17 @@ public class Order_Activity extends AppCompatActivity {
 
         AdapteRecyler_OrderActivity adapter2 = new AdapteRecyler_OrderActivity(Order_Activity.this, orderList);
         RecyclerView r = findViewById(R.id.recycler);
-        r.setLayoutManager(new LinearLayoutManager(Order_Activity.this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        r.setLayoutManager(linearLayoutManager);
+//        r.setLayoutManager(new LinearLayoutManager(Order_Activity.this));
+        r.setAdapter(adapter2);
         orderActivity.save.setOnClickListener(view1 -> {
             String itemSelected = orderActivity.autoCompleteTextView.getText().toString().trim();
             orderList.add(itemSelected);
-            r.setAdapter(adapter2);
+            adapter2.notifyDataSetChanged();
+
         });
 
 
