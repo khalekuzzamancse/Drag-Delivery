@@ -100,15 +100,26 @@ public class MainActivity extends AppCompatActivity {
     private void extract(List<Map<String, String>> readHistory) {
         List<String> ListDate = new ArrayList<>();
         Map<String, Map<String, String>> HistoryByDate = new HashMap<>();
+        //getting the map by date
         for (int i = 0; i < readHistory.size(); i++) {
+            //picking the date
             String date = readHistory.get(i).get("date");
+            //adding the date to the dateList
             ListDate.add(date);
+            //picking the history from the corresponding date
             Map<String, String> temp = readHistory.get(i);
+            //removing the data field from the picked map
             temp.remove("date");
-            HistoryByDate.put(date,temp);
+            //putting the history map under the corresponding date
+            HistoryByDate.put(date, temp);
         }
         Log.i("Fetched", String.valueOf(ListDate));
-        Log.i("Fetched", String.valueOf(HistoryByDate));
+        for (int i = 0; i < ListDate.size(); i++) {
+            String date=ListDate.get(i);
+            Log.i("Fetched Date",date+"\n");
+            Log.i("Fetched", String.valueOf(HistoryByDate.get(date)));
+        }
+
 
     }
 
@@ -138,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         List<Map<String, String>> dates = new ArrayList<>();
-                        dates= (List<Map<String, String>>) document.get("dates");
+                        dates = (List<Map<String, String>>) document.get("dates");
                         extract(dates);
 
                     }
